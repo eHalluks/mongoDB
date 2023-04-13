@@ -35,7 +35,7 @@ tasklist /v /fo table | sort
   powershell.exe "path" next start-process mongosh.exe
   
 # ===================================== #
-Optionally you can the script in .ps1:
+Optionally you can create the script in .ps1:
 
 WT - required
 
