@@ -1,0 +1,99 @@
+use activeDirectory_computers
+activeDirectory_computers> db.createCollection('computers')
+activeDirectory_computers> db.computers.insert([
+{
+hostName: 'EXEMPLARYHOSTNAME00001',
+organizationUnit: 'OU=PL, OU=WAW, OU=EXP, OU=2202LTSC, OU=SERVER0x001',
+activeUser: 'User1',
+stock: 'IT Departament',
+installDate: '2023-03-01',
+},
+{
+hostName: 'EXEMPLARYHOSTNAME00002',
+organizationUnit: 'OU=PL, OU=WAW, OU=EXP, OU=2202LTSC, OU=SERVER0x002',
+activeUser: 'User2',
+stock: 'IT Departament',
+installDate: '2023-02-01',
+},
+hostName: 'EXEMPLARYHOSTNAME00003',
+organizationUnit: 'OU=PL, OU=WAW, OU=EXP, OU=2202LTSC, OU=SERVER0x003',
+activeUser: 'User3',
+stock: 'IT Departament',
+installDate: '2023-01-01',
+},
+])
+
+#find all
+
+activeDirectory_computers> db.computers.find()
+
+//it returns all objects...
+
+activeDirectory_computers> db.computers.find({ activeUser: 'User3' })
+
+//it returns:
+
+[
+  {
+    _id: ObjectId("6438519d2471a31737e75e18"),
+    hostName: 'EXEMPLARYHOSTNAME00003',
+    organizationUnit: 'OU=PL, OU=WAW, OU=EXP, OU=2202LTSC, OU=SERVER0x003',
+    activeUser: 'User3',
+    stock: 'IT Departament',
+    installDate: '2023-01-01',
+  }
+]
+
+#_id - you see this, becuase is programmed into the code. of course you can add uuid, nanoid and so on, so fot. 
+
+/*
+
+More operators...
+
+##Examples1
+$and: [{}, {}, {}...]
+$or: [{}, {}, {}...]
+$not: {},
+
+##Examples2
+$eq " = "
+$ne " <> "
+$gt " > "
+$lt " < "
+$gte " >= "
+$lte " <= "
+
+*/
+##diffrent variations
+your_base> db.exemplaBase.find({ price: {$gt: 250, $lt: 300} }) // you can combain other operators
+
+
+.find ({
+  $and:[
+    {productPrice: {$gt: 250, $lt: 750}}
+    {productEanCode: {$eq: 'XX-003-CN01'}}
+  ]
+});
+
+##other way to use operator $and
+
+.find ({
+  price: 250
+  eanCode: 'XX-003-CN01'
+})
+
+.find ({
+  $or:[
+    {productPrice: {$gt: 250, $lt: 750}}
+    {productEanCode: {$nq: 'XX-003-CN01', $nq 'XX-005-CN02'}}
+  ]
+})
+
+.find ({
+  productEanCode: {$not: {$eq: 'XX-003-CN01'}}
+  productPrice: {$not: {$eq: 1100}}
+})
+
+##optionally
+
+.find({ productEanCode: {$ne: 'XX-003-CN01'} })
