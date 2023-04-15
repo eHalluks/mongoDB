@@ -1,3 +1,377 @@
+General information:
+
+From SQL to MongoDB
+
+SQL = MongoDB
+DataBase = DataBase,
+Table = Collection,
+(Rrecord, Entity) = Document,
+Relation = *No relation (workaround exist)
+
+## Few usefull commands:
+
+=============================
+How to get the information about current db's ???
+
+use command: show dbs
+=============================
+
+How to get the information about collections in db ???
+
+first command: use <name of db>
+second command: show collections
+============================
+
+How to insert a Document to the collection ???
+
+use commends below:
+
+use <name of db>
+db.getCollection(<name of collection in string 'exempleCollection'>).insertOne({ propertyName1: 'value1', propertyName2: 200})
+
+Short version:
+
+db.exampleCollection.insertOne({ propertyName: "string" })
+============================
+
+How to insert many Documents to collection ???
+
+use commands below:
+
+db.getCollection(<name of collection in string 'exemple_collection'>).insertMany([
+...{
+...propertyNam1: "string1",
+...propertyNam2: 200,
+...propertyNam3: new Date(),
+...propertyNam4: true,
+...}, {
+...propertyNam1: "value1",
+...propertyNam2: 400,
+...propertyNam3: new Date('2023-04-15'),
+...propertyNam4: false,
+...}])
+
+short version db.exampleCollection.insertMany([
+//your data...
+])
+
+IMPORTANT: Kidnly, please remember that you can not back to upline when you use {ENTER} key
+IMPORTANT: If you need go down, please do not use close bracket behind first two characters after function.
+Example .insertOne([{ENTER} - in this stage you have to use {ENTER} key and you can not use "])" 
+============================
+
+How to update a Document in collection ???
+
+use commands below:
+
+PREMISE: type of change: replace. exemplary current data:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."propertyNam1": "string1",
+  ..."propertyNam2": 200,
+  ..."propertyNam3": new Date(),
+  ..."propertyNam4": true,
+  ...} 
+]
+============================
+
+You have to change the Document and leave only propertyName1
+
+use <name of db>
+db.getCollection(<name of collection in string 'exempleCollection'>).replaceOne({_id: ObjectId("fiujernfgiuerninergiuernf231")}, {propertyNam1: "string1"})
+
+short version db.exampleCollection.replaceOne({//id}, {changes})
+
+RESULT:
+<information about changes>
+
+.find()
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."propertyNam1": "string1",
+  ...}
+]
+
+!Make sure what want to do!.
+It is important to understand, the replaceOne return new obj with declarated changes, 
+so if you do not enter all propertis, then you receive new obj without them. Be careful on it.
+============================
+
+How to update the Document? 
+
+use commands below:
+
+use <name of db>
+
+PREMISE: your array looks like below:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."propertyNam1": "string1",
+  ..."propertyNam2": 200,
+  ..."propertyNam3": new Date(),
+  ..."propertyNam4": true,
+  ...} 
+]
+
+++ HINT: If you copy only id and paste it after _id:, then the syntax creates ObjectId autmatically ++
+db.getCollection('exemplaryCollection').updateOne( {_id: ObjectId("fiujernfgiuerninergiuernf231"}, {$set: {propertyNam1: "string2"} })
+
+short version: db.exemplaryCollection.updateOne( {//_id}, {$set: {//changes}})
+
+RESULT:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."propertyNam1": "string2",
+  ..."propertyNam2": 200,
+  ..."propertyNam3": new Date(),
+  ..."propertyNam4": true,
+  ...} 
+]
+
+
+Other operators: $inc ∈ {incrementation, decrementation}
+
+use <name of db>
+
+ PREMISE: your array looks like below:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."numA": 2,
+  ..."numB": 4,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2023-03-04 12:00"
+  ...} 
+]
+
+db.getCollection('exemplaryCollection').updateOne( {_id: ObjectId("fiujernfgiuerninergiuernf231"}, {$inc: {numA: 4} })
+
+short version: db.exemplaryCollection.updateOne( {//_id}, {$inc: {//changes}})
+
+RESULT:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."numA": 6,
+  ..."numB": 4,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2023-03-04 12:00"
+  ...} 
+]
+
+If you need decrement the value of property numA or numB, just use a minus before the value.
+============================
+
+How to remove some property from the document obj in other way then replaceOne ???
+
+use <name of db>
+
+PREMISE: your array looks like below:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."numA": 2,
+  ..."numB": 4,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2023-03-04 12:00"
+  ...} 
+]
+
+db.getCollection('exemplaryCollection').updateOne( {_id: ObjectId("fiujernfgiuerninergiuernf231"}, {$unset: {result: ""} })
+
+short version: db.exemplaryCollection.updateOne( {//_id}, {$unset: {//changes}})
+
+RESULT:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."numA": 2,
+  ..."numB": 4,
+  ..."isActive": true,
+  ..."lastUpdate": "2023-03-04 12:00"
+  ...} 
+]
+
+If you need add property to the obj, use $set and enter the prop.name and value {$set: {newPropertyName: "new value"} }
+============================
+
+How to set a current date for some property which will be update any time when someone add or update document ??? 
+
+use <name of db>
+
+PREMISE: your array looks like below:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."numA": 2,
+  ..."numB": 4,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2023-03-04 12:00"
+  ...} 
+]
+
+db.getCollection('exemplaryCollection').updateOne( {_id: ObjectId("fiujernfgiuerninergiuernf231"}, {
+
+... $unset: {
+...   result: "",
+... },
+... $inc: {
+...   numB: 12,
+... },
+... $currentDate: {
+... lastUpdate: true
+...}, 
+...});
+
+short version: db.exemplaryCollection.updateOne( {//_id}, {$unset: {//changes}, $inc: {//changes}, $currentDate: {//changes}, })
+
+RESULT: 
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."numA": 2,
+  ..."numB": 4,
+  ..."isActive": true,
+  ..."lastUpdate": <The current date is added here, which is calculated when the document is added or updated>
+  ...} 
+]
+
+IMPORTANT: Current date is a typeof ISODATE - You have to check timezone and predict which date will be correct.
+============================
+
+How to find a documents before/after some date ???
+
+use <name of db>
+
+PREMISE: your array looks like below:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."numA": 2,
+  ..."numB": 4,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2023-03-04 12:00"
+  ...},
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf232"), 
+  ..."numA": 3,
+  ..."numB": 3,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2022-04-04 12:00"
+  ...},
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf233"), 
+  ..."numA": 1,
+  ..."numB": 5,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2021-04-04 12:00"
+  ...} 
+]
+
+db.getCollection('exemplaryCollection').find({
+... lastUpdate: {
+...   $lt: new Date('2022-12-01')
+... },
+... });
+
+short version db.exemplaryCollection.find( {lastUpdate: {$lt: new Date('2022-12-01')} } )
+
+RESULTS:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf232"), 
+  ..."numA": 3,
+  ..."numB": 3,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2022-04-04 12:00"
+  ...},
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf233"), 
+  ..."numA": 1,
+  ..."numB": 5,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2021-04-04 12:00"
+  ...} 
+]
+
+More information about operators: more/less and so on - below
+============================
+
+How to delete a document from the db ???
+
+use <name of db>
+
+PREMISE: your array looks like below:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."numA": 2,
+  ..."numB": 4,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2023-03-04 12:00"
+  ...},
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf232"), 
+  ..."numA": 3,
+  ..."numB": 3,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2022-04-04 12:00"
+  ...},
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf233"), 
+  ..."numA": 1,
+  ..."numB": 5,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2021-04-04 12:00"
+  ...} 
+]
+
+db.getCollection('exemplaryCollection').deleteOne()
+
+
+
+
+
 use activeDirectory_computers
 activeDirectory_computers> db.createCollection('computers')
 activeDirectory_computers> db.computers.insert([
@@ -44,18 +418,18 @@ activeDirectory_computers> db.computers.find({ activeUser: 'User3' })
   }
 ]
 
-#_id - you see this, becuase is programmed into the code. of course you can add uuid, nanoid and so on, so fot. 
+#_id - you see this, becuase is programmed into the code. Of course you can add uuid, nanoid and so on, so fot. 
 
 /*
 
 More operators...
 
-##Examples1
+##Zone1
 $and: [{}, {}, {}...]
 $or: [{}, {}, {}...]
 $not: {},
 
-##Examples2
+##Zone2
 $eq " = "
 $ne " <> "
 $gt " > "
@@ -65,7 +439,7 @@ $lte " <= "
 
 */
 ##diffrent variations
-your_base> db.exemplaBase.find({ price: {$gt: 250, $lt: 300} }) // you can combain other operators
+your_base> db.exemplaCollection.find({ price: {$gt: 250, $lt: 300} }) // you can combain other operators
 
 
 .find ({
