@@ -366,11 +366,93 @@ PREMISE: your array looks like below:
   ...} 
 ]
 
-db.getCollection('exemplaryCollection').deleteOne()
+db.getCollection('exemplaryCollection').deleteOne({_id: ObjectId("fiujernfgiuerninergiuernf233")})
 
+short version db.exemplaryCollection.deleteOne({_id: ObjectId("fiujernfgiuerninergiuernf233")})
 
+RESULT:
 
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."numA": 2,
+  ..."numB": 4,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2023-03-04 12:00"
+  ...},
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf232"), 
+  ..."numA": 3,
+  ..."numB": 3,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2022-04-04 12:00"
+  ...},
+]
+============================
 
+How to remove many documents from db? 
+
+use <name of db>
+
+PREMISE: your array looks like below:
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf231"), 
+  ..."numA": 2,
+  ..."numB": 4,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2023-03-04 12:00"
+  ...},
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf232"), 
+  ..."numA": 3,
+  ..."numB": 3,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2022-04-04 12:00"
+  ...},
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf233"), 
+  ..."numA": 1,
+  ..."numB": 5,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2021-04-04 12:00"
+  ...} 
+]
+
+db.getCollection('exemplaryCollection').deleteMany({ numB: {$gt: 3} })
+
+short version db.exemplaryCollection.deleteMany({ numB: {$gt: 3} })
+
+RESULT: 
+
+.find() {ENTER}
+[
+  ...{
+  ..."_id": ObjectId("fiujernfgiuerninergiuernf232"), 
+  ..."numA": 3,
+  ..."numB": 3,
+  ..."result": 6,
+  ..."isActive": true,
+  ..."lastUpdate": "2022-04-04 12:00"
+  ...},
+]
+=============================
+++++++++++++++++++++++++++++
+=============================
+__End of first CRUD section__
+=============================
+++++++++++++++++++++++++++++
+=============================
+
+MORE EXAMPLES: 
 
 use activeDirectory_computers
 activeDirectory_computers> db.createCollection('computers')
