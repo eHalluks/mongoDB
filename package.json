@@ -1,0 +1,10 @@
+{
+  "name": "mongodb",
+  "main": "addUsers.js",
+  "scripts": {
+    "start-mongo": "cd C:/Program Files/MongoDB/Server/6.0/bin && mongod.exe"
+  },
+  "dependencies": {
+    "mongodb": "^5.2.0"
+  }
+}
