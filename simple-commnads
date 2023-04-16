@@ -8,6 +8,13 @@ Table = Collection,
 (Rrecord, Entity) = Document,
 Relation = *No relation (workaround exist)
 
+CRURD commands:
+insertOne/insertMany
+updateOne/updateMany
+deleteOne/deleteMany
+replaceOne
+find
+
 ## Few usefull commands:
 
 =============================
@@ -553,3 +560,17 @@ your_base> db.exemplaCollection.find({ price: {$gt: 250, $lt: 300} }) // you can
 ##optionally
 
 .find({ productEanCode: {$ne: 'XX-003-CN01'} })
+
+
+
+
+A task to practise CRUD in mongos:
+
+# create todo_base
+# add collection todos
+# create a few documents. Obj patter: shortDescription: "INC20230414", longDescription: "Lorem ipsum...", eventsFor: new Date('2023-04-14')
+# remove property "longDescription" from all documents
+# remove all documents where eventsFor is older then 10 days from current date
+# create the relaction between collection db.todos and db.categoryTodos. You have to create the new collection
+
+Hint: to creation a relation, you need to implement ID of category in obj's which are located in todos collection. Good luck!
